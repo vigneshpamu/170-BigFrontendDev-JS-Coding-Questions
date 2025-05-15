@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Debounce Example</title>
+  </head>
+  <body>
+    <h2>Debounce Input Test</h2>
+    <input type="text" id="search" placeholder="Type something..." />
+    <p id="result"></p>
+
+    <script>
+      const resultItem = document.querySelector('#result')
+      const queryInput = document.querySelector('#search')
+
+      function debounce(func, delay) {
+        let timeoutId
+
+        return function (...args) {
+          if (timeoutId) {
+            console.log(timeoutId, 'clearing timeoutId')
+            clearTimeout(timeoutId)
+          }
+
+          timeoutId = setTimeout(() => {
+            func(...args)
+          }, delay)
+        }
+      }
+
+      const handleSearch = (query) => {
+        resultItem.textContent = `Searching for "${query}" at ${new Date().toLocaleTimeString()}`
+        console.log('Search query:', query)
+      }
+
+      const debouncedSearch = debounce(handleSearch, 1000)
+
+      queryInput,
+        addEventListener('input', (event) => {
+          debouncedSearch(event.target.value)
+        })
+    </script>
+  </body>
+</html>
