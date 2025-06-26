@@ -11,3 +11,5 @@ function myObjectCreate(proto) {
   TempConstructor.prototype = proto
   return new TempConstructor()
 }
+
+// tsest
