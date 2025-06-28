@@ -13,6 +13,8 @@ function createCounter() {
     configurable: false,
     enumerable: true,
   })
+
+  return counter
 }
 
 const counter = new createCounter()
