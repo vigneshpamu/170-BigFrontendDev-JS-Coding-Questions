@@ -5,40 +5,33 @@
     <title>Debounce Example</title>
   </head>
   <body>
-    <h2>Debounce Input Test</h2>
-    <input type="text" id="search" placeholder="Type something..." />
-    <p id="result"></p>
+    <button id="btn">Click Me</button>
 
     <script>
-      const resultItem = document.querySelector('#result')
-      const queryInput = document.querySelector('#search')
-
       function debounce(func, delay) {
         let timeoutId
-
         return function (...args) {
-          if (timeoutId) {
-            console.log(timeoutId, 'clearing timeoutId')
-            clearTimeout(timeoutId)
-          }
-
+          clearTimeout(timeoutId)
           timeoutId = setTimeout(() => {
-            func(...args)
+            console.log(this, 'this in debounce') // ✅ 'this' refers to the context of the event listener
+            func.apply(this, args) // ✅ preserves correct `this`
           }, delay)
         }
       }
 
-      const handleSearch = (query) => {
-        resultItem.textContent = `Searching for "${query}" at ${new Date().toLocaleTimeString()}`
-        console.log('Search query:', query)
+      const searchHandler = {
+        query: 'JavaScript',
+        fetchSearchResults() {
+          console.log('Search for:', this.query) // ✅ 'this' refers to searchHandler
+        },
       }
 
-      const debouncedSearch = debounce(handleSearch, 1000)
-
-      queryInput,
-        addEventListener('input', (event) => {
-          debouncedSearch(event.target.value)
-        })
+      const button = document.getElementById('btn')
+      // Bind the correct `this` before passing
+      button.addEventListener(
+        'click',
+        debounce(searchHandler.fetchSearchResults.bind(searchHandler), 500)
+      )
     </script>
   </body>
 </html>

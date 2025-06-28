@@ -1,22 +1,20 @@
 class NodeStore {
   constructor() {
-    this.store = new WeakMap()
+    this._key = '__node_store__' + Math.random().toString(36).substring(2, 15)
   }
-
   /**
    * @param {Node} node
    * @param {any} value
    */
   set(node, value) {
-    this.store.set(node, value)
+    node[this._key] = value
   }
-
   /**
    * @param {Node} node
    * @return {any}
    */
   get(node) {
-    return this.store.get(node)
+    node[this._key]
   }
 
   /**
@@ -24,6 +22,6 @@ class NodeStore {
    * @return {Boolean}
    */
   has(node) {
-    return this.store.has(node)
+    return this._key in node
   }
 }

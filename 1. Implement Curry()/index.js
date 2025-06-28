@@ -4,23 +4,20 @@
  * @param { (...args: any[]) => any } fn
  * @returns { (...args: any[]) => any }
  */
+
+const sub = (a, b) => a - b
+
 function curry(fn) {
   return function curried(...args) {
     if (args.length >= fn.length) {
       return fn(...args)
     } else {
-      return function (...nextArgs) {
-        return curried(...args, ...nextArgs)
+      return function (...remainingArgs) {
+        return curried(...args, ...remainingArgs)
       }
     }
   }
 }
 
-// Example usage:
-const join = (a, b, c) => `${a}_${b}_${c}`
-const curriedJoin = curry(join)
-
-console.log(curriedJoin(1, 2, 3)) // '1_2_3'
-console.log(curriedJoin(1)(2, 3)) // '1_2_3'
-console.log(curriedJoin(1, 2)(3)) // '1_2_3'
-console.log(curriedJoin(1)(2)(3)) // '1_2_3'
+const curriedSub = curry(sub)
+console.log(curriedSub(10)(5)) // 5

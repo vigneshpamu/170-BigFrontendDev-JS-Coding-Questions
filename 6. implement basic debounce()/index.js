@@ -2,12 +2,10 @@ function debounce(func, delay) {
   let timeoutId
 
   return function (...args) {
-    if (timeoutId !== undefined) {
-      clearTimeout(timeoutId)
-    }
+    clearTimeout(timeoutId)
 
     timeoutId = setTimeout(() => {
-      func(...args)
+      func.apply(this, args)
     }, delay)
   }
 }

@@ -15,4 +15,5 @@ function createCounter() {
   })
 }
 
+const counter = new createCounter()
 // Ref - https://chatgpt.com/c/6826278b-86c0-8004-93a5-89d645a12b8b

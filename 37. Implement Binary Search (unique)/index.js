@@ -4,18 +4,17 @@
  * @return {number}
  */
 function binarySearch(arr, target) {
-  let low = 0
-  let high = arr.length - 1
+  // your code here
+  let left = 0
+  let right = arr.length - 1
 
-  while (low <= high) {
-    let mid = Math.floor((low + high) / 2)
-
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2)
+    if (arr[mid] === target) return mid
     if (arr[mid] < target) {
-      low = mid + 1
-    } else if (arr[mid] > target) {
-      high = mid - 1
+      left = mid + 1
     } else {
-      return mid
+      right = mid - 1
     }
   }
 
