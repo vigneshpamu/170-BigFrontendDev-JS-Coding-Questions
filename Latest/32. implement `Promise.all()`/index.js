@@ -5,8 +5,6 @@ function all(promises) {
 
     promises = Array.from(promises)
 
-    console.log(promises)
-
     if (promises.length === 0) {
       resolve(results)
       return
@@ -29,6 +27,10 @@ function all(promises) {
   })
 }
 
-all([Promise.resolve(1), 2, Promise.reject('Error occurred')])
+all([Promise.resolve(1), 2])
+  .then(console.log)
+  .catch(console.error)
+
+Promise.all([Promise.resolve(1), 2, Promise.reject('Error occurred')])
   .then(console.log)
   .catch(console.error)
